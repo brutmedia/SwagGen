@@ -171,6 +171,10 @@ public class CodeFormatter {
     }
 
     func getSchemaContext(_ schema: Schema) -> Context {
+        return getSchemaContext(schema, typeName: "")
+    }
+
+    private func getSchemaContext(_ schema: Schema, typeName: String) -> Context {
         var context: Context = [:]
 
         context["raw"] = schema.metadata.json
@@ -206,7 +210,7 @@ public class CodeFormatter {
         context["allProperties"] = schema.inheritedProperties.map(getPropertyContext)
 
         // fallback
-        context["type"] = getSchemaType(name: "", schema: schema)
+        context["type"] = getSchemaType(name: typeName, schema: schema)
 
         switch schema.type {
         case let .group(groupSchema):
@@ -446,6 +450,23 @@ public class CodeFormatter {
         context["name"] = getName(property.name)
         context["value"] = property.name
         context["type"] = getSchemaType(name: property.name, schema: property.schema)
+        switch property.schema.type {
+        case .object(let schema) where !schema.properties.isEmpty:
+            context["inlineDefinition"] = getSchemaContext(property.schema, typeName: getModelType(property.name))
+        case .group:
+            context["inlineDefinition"] = getSchemaContext(property.schema, typeName: getModelType(property.name))
+        case .array(let schema):
+            guard case let .single(itemSchema) = schema.items else {
+                break
+            }
+            switch itemSchema.type {
+            case .boolean, .string, .number, .integer: break
+            case .reference: break
+            default:
+                context["inlineDefinition"] = getSchemaContext(itemSchema, typeName: getModelType(property.name))
+            }
+        default: break
+        }
 
         if case .array = property.schema.type {
             context["isArray"] = true
