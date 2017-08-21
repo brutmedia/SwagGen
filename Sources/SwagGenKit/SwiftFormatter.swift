@@ -171,20 +171,20 @@ public class SwiftFormatter: CodeFormatter {
                 return checkEnum ? "[\(enumValue ?? typeString)]" : typeString
             }
         case let .object(schema):
-            //            if schema.properties.isEmpty {
-            switch schema.additionalProperties {
-            case .bool:
-                return "[String: Any]"
-            case let .schema(schema):
-                let typeString = getSchemaType(name: name, schema: schema, checkEnum: checkEnum)
-                return checkEnum ? "[String: \(enumValue ?? typeString)]" : typeString
+            if schema.properties.isEmpty {
+                switch schema.additionalProperties {
+                case .bool:
+                    return "[String: Any]"
+                case let .schema(schema):
+                    let typeString = getSchemaType(name: name, schema: schema, checkEnum: checkEnum)
+                    return checkEnum ? "[String: \(enumValue ?? typeString)]" : typeString
+                }
+            } else {
+                return getModelType(name)
             }
-        //            } else {
-        //                return getModelType(name)
-        //            }
         case let .reference(reference):
             return getSchemaTypeName(reference.swaggerObject)
-        case .allOf: return "UNKNOWN_ALL_OFF"
+        case .allOf: return getModelType(name)
         case .any: return "UNKNOWN_ANY"
         }
     }
