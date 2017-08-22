@@ -350,6 +350,7 @@ public class CodeFormatter {
             }
         default: break
         }
+        context["enum"] = property.enumValue.map { getEnumContext($0) }
 
         if case .array = property.schema.type {
             context["isArray"] = true
