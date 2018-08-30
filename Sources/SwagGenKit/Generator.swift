@@ -3,6 +3,7 @@ import JSONUtilities
 import PathKit
 import Rainbow
 import Stencil
+import StencilSwiftKit
 
 public class Generator {
 
@@ -22,7 +23,12 @@ public class Generator {
         filterExtension.registerFilter("lowerCamelCase") { ($0 as? String)?.lowerCamelCased() ?? $0 }
         filterExtension.registerFilter("upperCamelCase") { ($0 as? String)?.upperCamelCased() ?? $0 }
 
-        environment = Environment(loader: FileSystemLoader(paths: [templateConfig.basePath]), extensions: [filterExtension])
+        let stencilSwiftKitExtension = Extension()
+        stencilSwiftKitExtension.registerStencilSwiftExtensions()
+
+        environment = Environment(loader: FileSystemLoader(paths: [templateConfig.basePath]),
+                                  extensions: [filterExtension, stencilSwiftKitExtension],
+                                  templateClass: StencilSwiftTemplate.self)
     }
 
     public enum Clean: String {

@@ -24,7 +24,6 @@ public class Credit: Person {
         case thememusicby = "thememusicby"
         case voice = "voice"
         case writer = "writer"
-
         public static let cases: [Role] = [
           .actor,
           .associateproducer,

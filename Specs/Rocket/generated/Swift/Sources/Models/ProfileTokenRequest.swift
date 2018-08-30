@@ -12,7 +12,6 @@ public class ProfileTokenRequest: APIModel {
         case catalog = "Catalog"
         case commerce = "Commerce"
         case settings = "Settings"
-
         public static let cases: [Scopes] = [
           .catalog,
           .commerce,

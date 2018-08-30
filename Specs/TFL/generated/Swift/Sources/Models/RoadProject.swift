@@ -14,7 +14,6 @@ public class RoadProject: APIModel {
         case consultation = "Consultation"
         case construction = "Construction"
         case complete = "Complete"
-
         public static let cases: [Phase] = [
           .unscoped,
           .concept,

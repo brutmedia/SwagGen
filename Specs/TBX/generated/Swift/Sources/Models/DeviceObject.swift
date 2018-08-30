@@ -19,144 +19,106 @@ public class DeviceObject: APIModel {
     public var description: String?
 
     public class `Type`: APIModel {
-
         public var code: String?
-
         public var description: String?
-
         public init(code: String? = nil, description: String? = nil) {
             self.code = code
             self.description = description
         }
-
         private enum CodingKeys: String, CodingKey {
             case code
             case description
         }
-
         public required init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-
             code = try container.decodeIfPresent(.code)
             description = try container.decodeIfPresent(.description)
         }
-
         public func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
-
             try container.encodeIfPresent(code, forKey: .code)
             try container.encodeIfPresent(description, forKey: .description)
         }
-
         public func isEqual(to object: Any?) -> Bool {
           guard let object = object as? `Type` else { return false }
           guard self.code == object.code else { return false }
           guard self.description == object.description else { return false }
           return true
         }
-
         public static func == (lhs: `Type`, rhs: `Type`) -> Bool {
             return lhs.isEqual(to: rhs)
         }
     }
 
     public class Customer: APIModel {
-
         public var country: Country?
-
         /** When the customer was created */
         public var createdAt: DateTime?
-
         public var id: String?
-
         public var idp: Idp?
-
         public var subscriberId: String?
-
         public class Country: APIModel {
-
             public var code: String?
-
             public var description: String?
-
             public init(code: String? = nil, description: String? = nil) {
                 self.code = code
                 self.description = description
             }
-
             private enum CodingKeys: String, CodingKey {
                 case code
                 case description
             }
-
             public required init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
-
                 code = try container.decodeIfPresent(.code)
                 description = try container.decodeIfPresent(.description)
             }
-
             public func encode(to encoder: Encoder) throws {
                 var container = encoder.container(keyedBy: CodingKeys.self)
-
                 try container.encodeIfPresent(code, forKey: .code)
                 try container.encodeIfPresent(description, forKey: .description)
             }
-
             public func isEqual(to object: Any?) -> Bool {
               guard let object = object as? Country else { return false }
               guard self.code == object.code else { return false }
               guard self.description == object.description else { return false }
               return true
             }
-
             public static func == (lhs: Country, rhs: Country) -> Bool {
                 return lhs.isEqual(to: rhs)
             }
         }
-
         public class Idp: APIModel {
-
             public var code: String?
-
             public var description: String?
-
             public init(code: String? = nil, description: String? = nil) {
                 self.code = code
                 self.description = description
             }
-
             private enum CodingKeys: String, CodingKey {
                 case code
                 case description
             }
-
             public required init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
-
                 code = try container.decodeIfPresent(.code)
                 description = try container.decodeIfPresent(.description)
             }
-
             public func encode(to encoder: Encoder) throws {
                 var container = encoder.container(keyedBy: CodingKeys.self)
-
                 try container.encodeIfPresent(code, forKey: .code)
                 try container.encodeIfPresent(description, forKey: .description)
             }
-
             public func isEqual(to object: Any?) -> Bool {
               guard let object = object as? Idp else { return false }
               guard self.code == object.code else { return false }
               guard self.description == object.description else { return false }
               return true
             }
-
             public static func == (lhs: Idp, rhs: Idp) -> Bool {
                 return lhs.isEqual(to: rhs)
             }
         }
-
         public init(country: Country? = nil, createdAt: DateTime? = nil, id: String? = nil, idp: Idp? = nil, subscriberId: String? = nil) {
             self.country = country
             self.createdAt = createdAt
@@ -164,7 +126,6 @@ public class DeviceObject: APIModel {
             self.idp = idp
             self.subscriberId = subscriberId
         }
-
         private enum CodingKeys: String, CodingKey {
             case country
             case createdAt
@@ -172,27 +133,22 @@ public class DeviceObject: APIModel {
             case idp
             case subscriberId
         }
-
         public required init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-
             country = try container.decodeIfPresent(.country)
             createdAt = try container.decodeIfPresent(.createdAt)
             id = try container.decodeIfPresent(.id)
             idp = try container.decodeIfPresent(.idp)
             subscriberId = try container.decodeIfPresent(.subscriberId)
         }
-
         public func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
-
             try container.encodeIfPresent(country, forKey: .country)
             try container.encodeIfPresent(createdAt, forKey: .createdAt)
             try container.encodeIfPresent(id, forKey: .id)
             try container.encodeIfPresent(idp, forKey: .idp)
             try container.encodeIfPresent(subscriberId, forKey: .subscriberId)
         }
-
         public func isEqual(to object: Any?) -> Bool {
           guard let object = object as? Customer else { return false }
           guard self.country == object.country else { return false }
@@ -202,7 +158,6 @@ public class DeviceObject: APIModel {
           guard self.subscriberId == object.subscriberId else { return false }
           return true
         }
-
         public static func == (lhs: Customer, rhs: Customer) -> Bool {
             return lhs.isEqual(to: rhs)
         }

@@ -12,7 +12,6 @@ public class Order: APIModel {
         case placed = "placed"
         case approved = "approved"
         case delivered = "delivered"
-
         public static let cases: [Status] = [
           .placed,
           .approved,

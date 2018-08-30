@@ -12,7 +12,6 @@ public class Period: APIModel {
         case frequencyHours = "FrequencyHours"
         case frequencyMinutes = "FrequencyMinutes"
         case unknown = "Unknown"
-
         public static let cases: [`Type`] = [
           .normal,
           .frequencyHours,

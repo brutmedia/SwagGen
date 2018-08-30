@@ -18,7 +18,6 @@ extension TFL.Line {
         public enum ServiceTypes: String, Codable {
             case regular = "Regular"
             case night = "Night"
-
             public static let cases: [ServiceTypes] = [
               .regular,
               .night,

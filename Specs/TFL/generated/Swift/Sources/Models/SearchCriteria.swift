@@ -10,7 +10,6 @@ public class SearchCriteria: APIModel {
     public enum DateTimeType: String, Codable {
         case arriving = "Arriving"
         case departing = "Departing"
-
         public static let cases: [DateTimeType] = [
           .arriving,
           .departing,

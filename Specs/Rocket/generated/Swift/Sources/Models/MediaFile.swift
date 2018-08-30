@@ -12,7 +12,6 @@ public class MediaFile: APIModel {
         case stream = "Stream"
         case progressive = "Progressive"
         case download = "Download"
-
         public static let cases: [DeliveryType] = [
           .stream,
           .progressive,
@@ -26,7 +25,6 @@ public class MediaFile: APIModel {
         case hd720 = "HD-720"
         case hd1080 = "HD-1080"
         case unknown = "Unknown"
-
         public static let cases: [Resolution] = [
           .sd,
           .hd720,

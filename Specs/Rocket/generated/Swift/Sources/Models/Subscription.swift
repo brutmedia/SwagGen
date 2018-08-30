@@ -14,7 +14,6 @@ public class Subscription: APIModel {
         case lapsed = "Lapsed"
         case expired = "Expired"
         case none = "None"
-
         public static let cases: [Status] = [
           .active,
           .cancelled,
@@ -40,7 +39,6 @@ public class Subscription: APIModel {
     public var status: Status
 
     /** The end date of a subscription.
-
 Some subscriptions may not have an end date, in which case this
 property will not exist.
  */

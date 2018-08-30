@@ -10,7 +10,6 @@ public class EnumArrays: APIModel {
     public enum ArrayEnum: String, Codable {
         case fish = "fish"
         case crab = "crab"
-
         public static let cases: [ArrayEnum] = [
           .fish,
           .crab,
@@ -20,7 +19,6 @@ public class EnumArrays: APIModel {
     public enum JustSymbol: String, Codable {
         case greaterThanOrEqualTo = ">="
         case dollar = "$"
-
         public static let cases: [JustSymbol] = [
           .greaterThanOrEqualTo,
           .dollar,

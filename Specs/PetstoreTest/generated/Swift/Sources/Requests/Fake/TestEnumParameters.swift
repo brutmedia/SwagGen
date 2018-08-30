@@ -18,7 +18,6 @@ extension PetstoreTest.Fake {
         public enum EnumFormStringArray: String, Codable {
             case greaterThan = ">"
             case dollar = "$"
-
             public static let cases: [EnumFormStringArray] = [
               .greaterThan,
               .dollar,
@@ -30,7 +29,6 @@ extension PetstoreTest.Fake {
             case abc = "_abc"
             case efg = "-efg"
             case xyz = "(xyz)"
-
             public static let cases: [EnumFormString] = [
               .abc,
               .efg,
@@ -42,7 +40,6 @@ extension PetstoreTest.Fake {
         public enum EnumHeaderStringArray: String, Codable {
             case greaterThan = ">"
             case dollar = "$"
-
             public static let cases: [EnumHeaderStringArray] = [
               .greaterThan,
               .dollar,
@@ -54,7 +51,6 @@ extension PetstoreTest.Fake {
             case abc = "_abc"
             case efg = "-efg"
             case xyz = "(xyz)"
-
             public static let cases: [EnumHeaderString] = [
               .abc,
               .efg,
@@ -66,7 +62,6 @@ extension PetstoreTest.Fake {
         public enum EnumQueryStringArray: String, Codable {
             case greaterThan = ">"
             case dollar = "$"
-
             public static let cases: [EnumQueryStringArray] = [
               .greaterThan,
               .dollar,
@@ -78,7 +73,6 @@ extension PetstoreTest.Fake {
             case abc = "_abc"
             case efg = "-efg"
             case xyz = "(xyz)"
-
             public static let cases: [EnumQueryString] = [
               .abc,
               .efg,
@@ -90,7 +84,6 @@ extension PetstoreTest.Fake {
         public enum EnumQueryInteger: Int, Codable {
             case _1 = 1
             case negative2 = -2
-
             public static let cases: [EnumQueryInteger] = [
               ._1,
               .negative2,
@@ -101,7 +94,6 @@ extension PetstoreTest.Fake {
         public enum EnumQueryDouble: Double, Codable {
             case _11 = 1.1
             case negative12 = -1.2
-
             public static let cases: [EnumQueryDouble] = [
               ._11,
               .negative12,

@@ -11,36 +11,27 @@ public class ModelWithInlineSpec: APIModel {
     public var myModel: MyModel?
 
     public class MyModel: APIModel {
-
         /** name of the model */
         public var name: String?
-
         public init(name: String? = nil) {
             self.name = name
         }
-
         private enum CodingKeys: String, CodingKey {
             case name
         }
-
         public required init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-
             name = try container.decodeIfPresent(.name)
         }
-
         public func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
-
             try container.encodeIfPresent(name, forKey: .name)
         }
-
         public func isEqual(to object: Any?) -> Bool {
           guard let object = object as? MyModel else { return false }
           guard self.name == object.name else { return false }
           return true
         }
-
         public static func == (lhs: MyModel, rhs: MyModel) -> Bool {
             return lhs.isEqual(to: rhs)
         }

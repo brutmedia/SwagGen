@@ -27,7 +27,6 @@ extension TestSpec {
             public enum Status200: Int, Codable {
                 case one = 1
                 case two = 2
-
                 public static let cases: [Status200] = [
                   .one,
                   .two,

@@ -11,7 +11,6 @@ public class AccessToken: APIModel {
     public enum `Type`: String, Codable {
         case userAccount = "UserAccount"
         case userProfile = "UserProfile"
-
         public static let cases: [`Type`] = [
           .userAccount,
           .userProfile,

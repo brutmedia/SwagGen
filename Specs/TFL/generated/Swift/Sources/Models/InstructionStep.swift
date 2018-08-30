@@ -16,7 +16,6 @@ public class InstructionStep: APIModel {
         case southWest = "SouthWest"
         case west = "West"
         case northWest = "NorthWest"
-
         public static let cases: [SkyDirectionDescription] = [
           .north,
           .northEast,
@@ -37,7 +36,6 @@ public class InstructionStep: APIModel {
         case busyRoads = "BusyRoads"
         case none = "None"
         case pushBike = "PushBike"
-
         public static let cases: [TrackType] = [
           .cycleSuperHighway,
           .canalTowpath,

@@ -21,7 +21,6 @@ extension PetstoreTest.Pet {
             case available = "available"
             case pending = "pending"
             case sold = "sold"
-
             public static let cases: [Status] = [
               .available,
               .pending,

@@ -47,35 +47,26 @@ extension TBX.AuthorizationService {
         public enum Response: APIResponseValue, CustomStringConvertible, CustomDebugStringConvertible {
 
             public class Status200: APIModel {
-
                 public var status: Bool?
-
                 public init(status: Bool? = nil) {
                     self.status = status
                 }
-
                 private enum CodingKeys: String, CodingKey {
                     case status
                 }
-
                 public required init(from decoder: Decoder) throws {
                     let container = try decoder.container(keyedBy: CodingKeys.self)
-
                     status = try container.decodeIfPresent(.status)
                 }
-
                 public func encode(to encoder: Encoder) throws {
                     var container = encoder.container(keyedBy: CodingKeys.self)
-
                     try container.encodeIfPresent(status, forKey: .status)
                 }
-
                 public func isEqual(to object: Any?) -> Bool {
                   guard let object = object as? Status200 else { return false }
                   guard self.status == object.status else { return false }
                   return true
                 }
-
                 public static func == (lhs: Status200, rhs: Status200) -> Bool {
                     return lhs.isEqual(to: rhs)
                 }

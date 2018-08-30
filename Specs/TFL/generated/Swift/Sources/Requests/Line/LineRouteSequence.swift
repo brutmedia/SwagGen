@@ -19,7 +19,6 @@ extension TFL.Line {
             case inbound = "inbound"
             case outbound = "outbound"
             case all = "all"
-
             public static let cases: [Direction] = [
               .inbound,
               .outbound,
@@ -31,7 +30,6 @@ extension TFL.Line {
         public enum ServiceTypes: String, Codable {
             case regular = "Regular"
             case night = "Night"
-
             public static let cases: [ServiceTypes] = [
               .regular,
               .night,

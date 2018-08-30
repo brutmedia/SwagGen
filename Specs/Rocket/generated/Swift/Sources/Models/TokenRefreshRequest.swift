@@ -11,7 +11,6 @@ public class TokenRefreshRequest: APIModel {
     along with the token(s). This is only really intended for web based clients which
     need to pass the cookies to a server to render a page based on the users
     content filters, e.g subscription code.
-
     If type `Session` the cookie will be session based.
     If type `Persistent` the cookie will have a medium term lifespan.
     If undefined no cookies will be set.
@@ -19,7 +18,6 @@ public class TokenRefreshRequest: APIModel {
     public enum CookieType: String, Codable {
         case session = "Session"
         case persistent = "Persistent"
-
         public static let cases: [CookieType] = [
           .session,
           .persistent,
@@ -33,7 +31,6 @@ public class TokenRefreshRequest: APIModel {
 along with the token(s). This is only really intended for web based clients which
 need to pass the cookies to a server to render a page based on the users
 content filters, e.g subscription code.
-
 If type `Session` the cookie will be session based.
 If type `Persistent` the cookie will have a medium term lifespan.
 If undefined no cookies will be set.

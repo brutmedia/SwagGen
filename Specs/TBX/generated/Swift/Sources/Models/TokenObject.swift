@@ -22,42 +22,32 @@ public class TokenObject: APIModel {
     public var uses: Double?
 
     public class Idp: APIModel {
-
         public var code: String?
-
         public var description: String?
-
         public init(code: String? = nil, description: String? = nil) {
             self.code = code
             self.description = description
         }
-
         private enum CodingKeys: String, CodingKey {
             case code
             case description
         }
-
         public required init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-
             code = try container.decodeIfPresent(.code)
             description = try container.decodeIfPresent(.description)
         }
-
         public func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
-
             try container.encodeIfPresent(code, forKey: .code)
             try container.encodeIfPresent(description, forKey: .description)
         }
-
         public func isEqual(to object: Any?) -> Bool {
           guard let object = object as? Idp else { return false }
           guard self.code == object.code else { return false }
           guard self.description == object.description else { return false }
           return true
         }
-
         public static func == (lhs: Idp, rhs: Idp) -> Bool {
             return lhs.isEqual(to: rhs)
         }

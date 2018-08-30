@@ -22,7 +22,6 @@ public class PageEntry: APIModel {
         case imageEntry = "ImageEntry"
         case customEntry = "CustomEntry"
         case peopleEntry = "PeopleEntry"
-
         public static let cases: [`Type`] = [
           .itemEntry,
           .itemDetailEntry,
@@ -52,7 +51,6 @@ public class PageEntry: APIModel {
     public var customFields: [String: Any]?
 
     /** The images for the page entry if any.
-
 For example the images of an `ImageEntry`.
  */
     public var images: [String: URL]?

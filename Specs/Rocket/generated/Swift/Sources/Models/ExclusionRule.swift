@@ -15,7 +15,6 @@ public class ExclusionRule: APIModel {
         case streamOrDownload = "StreamOrDownload"
         case progressiveDownload = "ProgressiveDownload"
         case none = "None"
-
         public static let cases: [ExcludeDelivery] = [
           .stream,
           .download,
@@ -31,7 +30,6 @@ public class ExclusionRule: APIModel {
         case hd720 = "HD-720"
         case hd1080 = "HD-1080"
         case unknown = "Unknown"
-
         public static let cases: [ExcludeMinResolution] = [
           .sd,
           .hd720,

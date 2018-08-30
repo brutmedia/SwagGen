@@ -10,7 +10,6 @@ public class MapTest: APIModel {
     public enum MapOfEnumString: String, Codable {
         case upper = "UPPER"
         case lower = "lower"
-
         public static let cases: [MapOfEnumString] = [
           .upper,
           .lower,

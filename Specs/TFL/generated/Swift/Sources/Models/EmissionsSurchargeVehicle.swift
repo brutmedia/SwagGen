@@ -11,7 +11,6 @@ public class EmissionsSurchargeVehicle: APIModel {
         case notCompliant = "NotCompliant"
         case compliant = "Compliant"
         case exempt = "Exempt"
-
         public static let cases: [Compliance] = [
           .notCompliant,
           .compliant,

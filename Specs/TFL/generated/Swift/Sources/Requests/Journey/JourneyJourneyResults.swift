@@ -18,7 +18,6 @@ extension TFL.Journey {
         public enum TimeIs: String, Codable {
             case arriving = "Arriving"
             case departing = "Departing"
-
             public static let cases: [TimeIs] = [
               .arriving,
               .departing,
@@ -30,7 +29,6 @@ extension TFL.Journey {
             case leastInterchange = "LeastInterchange"
             case leastTime = "LeastTime"
             case leastWalking = "LeastWalking"
-
             public static let cases: [JourneyPreference] = [
               .leastInterchange,
               .leastTime,
@@ -46,7 +44,6 @@ extension TFL.Journey {
             case noElevators = "NoElevators"
             case stepFreeToVehicle = "StepFreeToVehicle"
             case stepFreeToPlatform = "StepFreeToPlatform"
-
             public static let cases: [AccessibilityPreference] = [
               .noRequirements,
               .noSolidStairs,
@@ -62,7 +59,6 @@ extension TFL.Journey {
             case slow = "Slow"
             case average = "Average"
             case fast = "Fast"
-
             public static let cases: [WalkingSpeed] = [
               .slow,
               .average,
@@ -77,7 +73,6 @@ extension TFL.Journey {
             case takeOnTransport = "TakeOnTransport"
             case allTheWay = "AllTheWay"
             case cycleHire = "CycleHire"
-
             public static let cases: [CyclePreference] = [
               .none,
               .leaveAtStation,
@@ -92,7 +87,6 @@ extension TFL.Journey {
             case easy = "Easy"
             case moderate = "Moderate"
             case fast = "Fast"
-
             public static let cases: [BikeProficiency] = [
               .easy,
               .moderate,

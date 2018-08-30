@@ -11,7 +11,6 @@ public class Plan: APIModel {
     public enum `Type`: String, Codable {
         case free = "Free"
         case subscription = "Subscription"
-
         public static let cases: [`Type`] = [
           .free,
           .subscription,
@@ -22,7 +21,6 @@ public class Plan: APIModel {
     public enum RevenueType: String, Codable {
         case tvod = "TVOD"
         case svod = "SVOD"
-
         public static let cases: [RevenueType] = [
           .tvod,
           .svod,
@@ -35,7 +33,6 @@ public class Plan: APIModel {
         case month = "month"
         case year = "year"
         case none = "none"
-
         public static let cases: [BillingPeriodType] = [
           .week,
           .month,

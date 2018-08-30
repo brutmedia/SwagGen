@@ -15,7 +15,6 @@ public class OfferRights: APIModel {
         case streamOrDownload = "StreamOrDownload"
         case progressiveDownload = "ProgressiveDownload"
         case none = "None"
-
         public static let cases: [DeliveryType] = [
           .stream,
           .download,
@@ -31,7 +30,6 @@ public class OfferRights: APIModel {
         case hd720 = "HD-720"
         case hd1080 = "HD-1080"
         case unknown = "Unknown"
-
         public static let cases: [Resolution] = [
           .sd,
           .hd720,
@@ -47,7 +45,6 @@ public class OfferRights: APIModel {
         case rent = "Rent"
         case own = "Own"
         case none = "None"
-
         public static let cases: [Ownership] = [
           .subscription,
           .free,

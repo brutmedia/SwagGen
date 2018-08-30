@@ -19,7 +19,6 @@ extension TFL.TravelTime {
             case average = "Average"
             case from = "From"
             case to = "To"
-
             public static let cases: [Direction] = [
               .average,
               .from,

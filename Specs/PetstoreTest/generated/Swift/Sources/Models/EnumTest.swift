@@ -10,7 +10,6 @@ public class EnumTest: APIModel {
     public enum EnumInteger: Int, Codable {
         case _1 = 1
         case negative1 = -1
-
         public static let cases: [EnumInteger] = [
           ._1,
           .negative1,
@@ -20,7 +19,6 @@ public class EnumTest: APIModel {
     public enum EnumNumber: Double, Codable {
         case _11 = 1.1
         case negative12 = -1.2
-
         public static let cases: [EnumNumber] = [
           ._11,
           .negative12,
@@ -31,7 +29,6 @@ public class EnumTest: APIModel {
         case upper = "UPPER"
         case lower = "lower"
         case empty = ""
-
         public static let cases: [EnumString] = [
           .upper,
           .lower,

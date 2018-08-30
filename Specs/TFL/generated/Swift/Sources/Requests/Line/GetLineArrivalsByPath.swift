@@ -19,7 +19,6 @@ extension TFL.Line {
             case inbound = "inbound"
             case outbound = "outbound"
             case all = "all"
-
             public static let cases: [Direction] = [
               .inbound,
               .outbound,

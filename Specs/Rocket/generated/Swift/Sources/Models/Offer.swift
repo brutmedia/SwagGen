@@ -10,7 +10,6 @@ public class Offer: OfferRights {
     public enum Availability: String, Codable {
         case available = "Available"
         case comingSoon = "ComingSoon"
-
         public static let cases: [Availability] = [
           .available,
           .comingSoon,

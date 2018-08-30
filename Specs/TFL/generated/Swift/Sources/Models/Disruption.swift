@@ -17,7 +17,6 @@ public class Disruption: APIModel {
         case event = "Event"
         case crowding = "Crowding"
         case statusAlert = "StatusAlert"
-
         public static let cases: [Category] = [
           .undefined,
           .realTime,
