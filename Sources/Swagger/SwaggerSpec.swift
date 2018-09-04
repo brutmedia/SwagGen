@@ -134,6 +134,13 @@ extension SwaggerSpec: JSONObjectConvertible {
 
         operations = paths.reduce([]) { $0 + $1.operations }
 
+        operations.sort(by: { (lhs, rhs) -> Bool in
+            if lhs.path == rhs.path {
+                return lhs.method.rawValue > rhs.method.rawValue
+            }
+            return lhs.path > rhs.path
+        })
+
         resolveReferences()
     }
 
