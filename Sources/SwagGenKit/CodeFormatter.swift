@@ -102,9 +102,19 @@ public class CodeFormatter {
         case .reference:
             context["referenceType"] = schemaType
             context["aliasType"] = schemaType
-        case .array:
+        case .array(let arraySchema):
             context["arrayType"] = schemaType
             context["aliasType"] = schemaType
+            switch arraySchema.items {
+            case .single(let schema):
+                switch schema.type {
+                case .reference(let ref):
+                    context["arrayItemType"] = getDefinitionContext(SwaggerObject(name: ref.name, value: ref.value))
+                default:
+                    break
+                }
+            case .multiple: break
+            }
         default: break
         }
 
