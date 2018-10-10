@@ -116,6 +116,8 @@ public class CodeFormatter {
                 }
             case .multiple: break
             }
+        case .object(let objectSchema):
+            context["discriminator"] = objectSchema.discriminator
         default: break
         }
 
