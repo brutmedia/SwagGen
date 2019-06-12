@@ -208,7 +208,7 @@ public class KotlinFormatter: CodeFormatter {
         if case let .schema(schema) = parameter.type,
             case .array = schema.schema.type,
             let collectionFormat = schema.collectionFormat {
-            if type != "[String]" {
+            if type != "List<String>" {
                 encodedValue += ".map({ String(describing: $0) })"
             }
             encodedValue += ".joined(separator: \"\(collectionFormat.separator)\")"
@@ -233,7 +233,7 @@ public class KotlinFormatter: CodeFormatter {
 
         let jsonTypes = ["Any", "[String: Any]", "Int", "String", "Float", "Double", "Bool"]
 
-        if !jsonTypes.contains(type), !jsonTypes.map({ "[\($0)]" }).contains(type), !jsonTypes.map({ "[String: \($0)]" }).contains(type) {
+        if !jsonTypes.contains(type), !jsonTypes.map({ "List<\($0)>" }).contains(type), !jsonTypes.map({ "[String: \($0)]" }).contains(type) {
             if type.hasPrefix("[[") {
                 encodedValue += ".map({ $0.encode() })"
             } else if type.hasPrefix("[String: [") {
