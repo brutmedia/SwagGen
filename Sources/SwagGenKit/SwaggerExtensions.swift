@@ -101,6 +101,18 @@ extension Schema {
         return []
     }
 
+    var inheritedOnlyProperties: [Property] {
+        return inheritedOnlyRequiredProperties + inheritedOnlyOptionalProperties
+    }
+
+    var inheritedOnlyRequiredProperties: [Property] {
+        return (parent?.value.inheritedRequiredProperties ?? [])
+    }
+
+    var inheritedOnlyOptionalProperties: [Property] {
+        return (parent?.value.inheritedOptionalProperties ?? [])
+    }
+
     var inheritedProperties: [Property] {
         return inheritedRequiredProperties + inheritedOptionalProperties
     }
