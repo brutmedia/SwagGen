@@ -167,6 +167,9 @@ public class CodeFormatter {
         if modelInheritance {
             context["requiredProperties"] = schema.requiredProperties.map(getPropertyContext)
             context["optionalProperties"] = schema.optionalProperties.map(getPropertyContext)
+            context["inheritedProperties"] = schema.inheritedOnlyProperties.map(getPropertyContext)
+            context["inheritedRequiredProperties"] = schema.inheritedOnlyRequiredProperties.map(getPropertyContext)
+            context["inheritedOptionalProperties"] = schema.inheritedOnlyOptionalProperties.map(getPropertyContext)
             context["properties"] = schema.properties.map(getPropertyContext)
             context["enums"] = schema.enums.map(getEnumContext)
             context["schemas"] = schema.properties.compactMap { property in
