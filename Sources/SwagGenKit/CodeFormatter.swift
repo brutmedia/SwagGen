@@ -50,7 +50,7 @@ public class CodeFormatter {
             .map { ($0, $1) }
             .sorted { $0.0.lowercased() < $1.0.lowercased() }
             .map { ["name": $0, "operations": $1.map(getOperationContext)] }
-        context["definitions"] = spec.definitions.map(getDefinitionContext).sorted { sortContext(by: "type", value1: $0, value2: $1) }
+        context["definitions"] = spec.definitions.map { getDefinitionContext($0) }.sorted { sortContext(by: "type", value1: $0, value2: $1) }
         context["info"] = getSpecInformationContext(spec.info)
         context["host"] = spec.host
         context["basePath"] = spec.basePath
@@ -85,10 +85,10 @@ public class CodeFormatter {
         return context
     }
 
-    func getDefinitionContext(_ schema: SwaggerObject<Schema>) -> Context {
+    func getDefinitionContext(_ schema: SwaggerObject<Schema>, inlined: Bool = false) -> Context {
         var context = getSchemaContext(schema.value)
 
-        context["type"] = getSchemaTypeName(schema)
+        context["type"] = getSchemaTypeName(schema, inlined: inlined)
 
         let schemaType = getSchemaType(name: schema.name, schema: schema.value)
 
@@ -123,12 +123,12 @@ public class CodeFormatter {
         return context
     }
 
-    func getSchemaTypeName(_ schema: SwaggerObject<Schema>) -> String {
+    func getSchemaTypeName(_ schema: SwaggerObject<Schema>, inlined: Bool = false) -> String {
         if case .simple = schema.value.type,
             schema.value.getEnum(name: schema.name, description: schema.value.metadata.description) != nil {
-            return getEnumType(schema.name)
+            return getEnumType(schema.name, inlined: inlined)
         } else {
-            return getModelType(schema.name)
+            return getModelType(schema.name, inlined: inlined)
         }
     }
 
@@ -347,12 +347,13 @@ public class CodeFormatter {
         context["optional"] = !property.required
         context["name"] = getName(property.name)
         context["value"] = property.name
-        context["type"] = getSchemaType(name: property.name, schema: property.schema)
+        let propertyTypeName = getSchemaType(name: property.name, schema: property.schema)
+        context["type"] = propertyTypeName
         switch property.schema.type {
         case .object(let schema) where !schema.properties.isEmpty:
-            context["inlineDefinition"] = getDefinitionContext(SwaggerObject(name: getModelType(property.name), value: property.schema))
+            context["inlineDefinition"] = getDefinitionContext(SwaggerObject(name: propertyTypeName, value: property.schema), inlined: true)
         case .allOf:
-            context["inlineDefinition"] = getDefinitionContext(SwaggerObject(name: getModelType(property.name), value: property.schema))
+            context["inlineDefinition"] = getDefinitionContext(SwaggerObject(name: propertyTypeName, value: property.schema), inlined: true)
         case .array(let schema):
             guard case let .single(itemSchema) = schema.items else {
                 break
@@ -361,7 +362,7 @@ public class CodeFormatter {
             case .simple: break
             case .reference: break
             default:
-                context["inlineDefinition"] = getDefinitionContext(SwaggerObject(name: getModelType(property.name), value: itemSchema))
+                context["inlineDefinition"] = getDefinitionContext(SwaggerObject(name: getModelType(property.name, inlined: true), value: itemSchema), inlined: true)
             }
         default: break
         }
@@ -452,22 +453,29 @@ public class CodeFormatter {
         return escapeName(name)
     }
 
-    func getEnumType(_ name: String) -> String {
+    func getEnumType(_ name: String, inlined: Bool = false) -> String {
         if let enumName = enumNames[name] {
             return enumName
         }
-        return escapeType("\(modelPrefix)\(name.upperCamelCased())")
+        let type = name.upperCamelCased()
+        if inlined {
+            return escapeType(type)
+        }
+        return escapeType("\(modelPrefix)\(type)")
     }
 
     func getItemType(name: String, item: Item, checkEnum: Bool = true) -> String {
         return "UNKNOWN_ITEM_TYPE"
     }
 
-    func getModelType(_ name: String) -> String {
+    func getModelType(_ name: String, inlined: Bool = false) -> String {
         if let modelName = modelNames[name] {
             return modelName
         }
         let type = name.upperCamelCased()
+        if inlined {
+            return escapeType(type)
+        }
         return escapeType("\(modelPrefix)\(type)\(modelSuffix)")
     }
 
