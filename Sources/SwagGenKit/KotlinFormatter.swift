@@ -116,7 +116,7 @@ public class KotlinFormatter: CodeFormatter {
         switch item.type {
         case let .array(item):
             let type = getItemType(name: name, item: item.items, checkEnum: checkEnum)
-            return checkEnum ? "[\(enumValue ?? type)]" : type
+            return checkEnum ? "List<\(enumValue ?? type)>" : type
         case let .simpleType(simpleType):
             if simpleType.canBeEnum, let enumValue = enumValue {
                 return enumValue
@@ -245,7 +245,7 @@ public class KotlinFormatter: CodeFormatter {
 
         if case let .other(items) = parameter.type,
             case let .array(item) = items.type {
-            if type != "[String]" {
+            if type != "List<String>" {
                 encodedValue += ".map({ String(describing: $0) })"
             }
             encodedValue += ".joined(separator: \"\(item.collectionFormat.separator)\")"
