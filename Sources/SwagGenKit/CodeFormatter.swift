@@ -50,7 +50,7 @@ public class CodeFormatter {
             .map { ($0, $1) }
             .sorted { $0.0.lowercased() < $1.0.lowercased() }
             .map { ["name": $0, "operations": $1.map(getOperationContext)] }
-        context["schemas"] = spec.components.schemas.map(getSchemaContent).sorted { sortContext(by: "type", value1: $0, value2: $1) }
+        context["schemas"] = spec.components.schemas.map { getSchemaContent($0) }.sorted { sortContext(by: "type", value1: $0, value2: $1) }
         context["info"] = getSpecInformationContext(spec.info)
         context["servers"] = spec.servers.enumerated().map(getServerContext)
         if let server = spec.servers.first, server.variables.isEmpty {
@@ -102,10 +102,10 @@ public class CodeFormatter {
         return context
     }
 
-    func getSchemaContent(_ schema: ComponentObject<Schema>) -> Context {
+    func getSchemaContent(_ schema: ComponentObject<Schema>, inlined: Bool = false) -> Context {
         var context = getSchemaContext(schema.value)
 
-        context["type"] = getSchemaTypeName(schema)
+        context["type"] = getSchemaTypeName(schema, inlined: inlined)
 
         let schemaType = getSchemaType(name: schema.name, schema: schema.value)
 
@@ -142,7 +142,7 @@ public class CodeFormatter {
                         var context: Context = [:]
                         context["key"] = key
                         let reference = Reference<Schema>(value)
-                        context["type"] = getModelType(reference.name)
+                        context["type"] = getModelType(reference.name, inlined: inlined)
                         array.append(context)
                     })
                 discriminatorTypeContext["propertyName"] = discriminator.propertyName
@@ -154,12 +154,12 @@ public class CodeFormatter {
         return context
     }
 
-    func getSchemaTypeName(_ schema: ComponentObject<Schema>) -> String {
+    func getSchemaTypeName(_ schema: ComponentObject<Schema>, inlined: Bool = false) -> String {
         if schema.value.canBeEnum,
             schema.value.getEnum(name: schema.name, description: schema.value.metadata.description) != nil {
-            return getEnumType(schema.name)
+            return getEnumType(schema.name, inlined: inlined)
         } else {
-            return getModelType(schema.name)
+            return getModelType(schema.name, inlined: inlined)
         }
     }
 
@@ -173,10 +173,14 @@ public class CodeFormatter {
     }
 
     func getSchemaContext(_ schema: Schema) -> Context {
-        return getSchemaContext(schema, typeName: "")
+        return getSchemaContext(schema, typeName: "", inlined: false)
     }
 
-    private func getSchemaContext(_ schema: Schema, typeName: String) -> Context {
+    private func getSchemaContext(_ schema: Schema, inlined: Bool) -> Context {
+        return getSchemaContext(schema, typeName: "", inlined: inlined)
+    }
+
+    private func getSchemaContext(_ schema: Schema, typeName: String, inlined: Bool) -> Context {
         var context: Context = [:]
 
         context["raw"] = schema.metadata.json
@@ -226,7 +230,7 @@ public class CodeFormatter {
 
                 func getReferenceContext<T>(_ reference: Reference<T>) -> Context {
                     var context: Context = [:]
-                    context["type"] = getModelType(reference.name)
+                    context["type"] = getModelType(reference.name, inlined: inlined)
                     context["name"] = getName(reference.name)
                     return context
                 }
@@ -396,7 +400,7 @@ public class CodeFormatter {
         context["name"] = response.name.lowerCamelCased()
         context["statusCode"] = response.statusCode
         context["success"] = response.successful
-        context["schema"] = response.response.value.schema.flatMap(getSchemaContext)
+        context["schema"] = response.response.value.schema.flatMap { getSchemaContext($0) }
         context["description"] = response.response.value.description.description
         context["type"] = response.response.value.schema.flatMap { getSchemaType(name: response.name, schema: $0) }
 
@@ -454,12 +458,13 @@ public class CodeFormatter {
         context["optional"] = !property.required || property.schema.metadata.nullable
         context["name"] = getName(property.name)
         context["value"] = property.name
-        context["type"] = getSchemaType(name: property.name, schema: property.schema)
+        let propertyTypeName = getSchemaType(name: property.name, schema: property.schema)
+        context["type"] = propertyTypeName
         switch property.schema.type {
         case .object(let schema) where !schema.properties.isEmpty:
-            context["inlineDefinition"] = getSchemaContext(property.schema, typeName: getModelType(property.name))
+            context["inlineDefinition"] = getSchemaContext(property.schema, typeName: getModelType(property.name, inlined: true), inlined: true)
         case .group:
-            context["inlineDefinition"] = getSchemaContext(property.schema, typeName: getModelType(property.name))
+            context["inlineDefinition"] = getSchemaContext(property.schema, typeName: getModelType(property.name, inlined: true), inlined: true)
         case .array(let schema):
             guard case let .single(itemSchema) = schema.items else {
                 break
@@ -468,7 +473,7 @@ public class CodeFormatter {
             case .boolean, .string, .number, .integer: break
             case .reference: break
             default:
-                context["inlineDefinition"] = getSchemaContext(itemSchema, typeName: getModelType(property.name))
+                context["inlineDefinition"] = getSchemaContext(itemSchema, typeName: getModelType(property.name, inlined: true), inlined: true)
             }
         default: break
         }
@@ -555,18 +560,25 @@ public class CodeFormatter {
         return escapeName(name)
     }
 
-    func getEnumType(_ name: String) -> String {
+    func getEnumType(_ name: String, inlined: Bool = false) -> String {
         if let enumName = enumNames[name] {
             return enumName
         }
-        return escapeType("\(modelPrefix)\(name.upperCamelCased())")
+        let type = name.upperCamelCased()
+        if inlined {
+            return escapeType(type)
+        }
+        return escapeType("\(modelPrefix)\(type)")
     }
 
-    func getModelType(_ name: String) -> String {
+    func getModelType(_ name: String, inlined: Bool) -> String {
         if let modelName = modelNames[name] {
             return modelName
         }
         let type = name.upperCamelCased()
+        if inlined {
+            return escapeType(type)
+        }
         return escapeType("\(modelPrefix)\(type)\(modelSuffix)")
     }
 
