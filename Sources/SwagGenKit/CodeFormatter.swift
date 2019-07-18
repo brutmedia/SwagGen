@@ -132,6 +132,20 @@ public class CodeFormatter {
                 }
             case .multiple: break
             }
+        case .object(let objectSchema):
+            if let discriminator = objectSchema.discriminator {
+                var discriminatorTypeContext = Context()
+                discriminatorTypeContext["mapping"] = discriminator.mapping.reduce(into: [Context](), { (array, keyValue) in
+                    let (key, value) = keyValue
+                    var context: Context = [:]
+                    context["key"] = key
+                    let reference = Reference<Schema>(value)
+                    context["type"] = getModelType(reference.name)
+                    array.append(context)
+                })
+                discriminatorTypeContext["propertyName"] = discriminator.propertyName
+                context["discriminator"] = discriminatorTypeContext
+            }
         default: break
         }
 
