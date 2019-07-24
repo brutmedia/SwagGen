@@ -37,7 +37,7 @@ update_brew:
 release:
 	sed -i '' 's|\(let version = "\)\(.*\)\("\)|\1$(VERSION)\3|' Sources/SwagGen/main.swift
 
-	git add .
+	git add Makefile Sources/SwagGen/main.swift
 	git commit -m "Update to $(VERSION)"
 	git tag $(VERSION)
 
