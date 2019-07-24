@@ -39,7 +39,7 @@ release:
 
 	git add .
 	git commit -m "Update to $(VERSION)"
-	#git tag $(VERSION)
+	git tag $(VERSION)
 
 .PHONY: package_release
 package_release: build
