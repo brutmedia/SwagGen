@@ -152,8 +152,8 @@ public class KotlinFormatter: CodeFormatter {
 
             if fixedWidthIntegers {
                 switch format {
-                case .int32: return "Int32"
-                case .int64: return "Int64"
+                case .int32: return "Int"
+                case .int64: return "Long"
                 }
             } else {
                 return "Int"
